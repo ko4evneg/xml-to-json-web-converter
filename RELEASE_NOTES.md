@@ -1,5 +1,9 @@
 #  Release notes
 
+###  _0.3.0-SNAPSHOT_
+- Added XmlParserServlet and get/post handling
+- Added HTML form for submitting XML
+
 ###  _0.2.0-SNAPSHOT_
 - Added config log4j2.xml
 - Added Bootstrap.class logging
