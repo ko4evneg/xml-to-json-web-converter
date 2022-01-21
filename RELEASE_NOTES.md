@@ -1,5 +1,9 @@
 #  Release notes
 
+###  _0.2.0-SNAPSHOT_
+- Added config log4j2.xml
+- Added Bootstrap.class logging
+
 ###  _0.1.0-SNAPSHOT_
 - Added embedded Jetty server
 - Added Bootstrap class from where app should start
