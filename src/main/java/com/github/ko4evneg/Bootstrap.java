@@ -3,43 +3,57 @@ package com.github.ko4evneg;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.util.Properties;
 
 public class Bootstrap {
-    //TODO: Exception logging
-    public static void start() throws Exception {
-        //Load properties
+    private static final Logger LOGGER = LoggerFactory.getLogger(Bootstrap.class);
+
+    public static void start() {
+        //Load properties file
         Path propertiesPath = Path.of("").toAbsolutePath().resolve("config.property");
         Properties properties = new Properties();
         try (FileInputStream inputStream = new FileInputStream(propertiesPath.toString())) {
+            LOGGER.info("Loading properties file: " + propertiesPath);
             properties.load(inputStream);
+            LOGGER.info("SUCCESS: Loading properties file");
         } catch (IOException e) {
-            //TODO: logging
-            throw new RuntimeException("Can't load properties file." + System.lineSeparator() + e);
+            LOGGER.error("Can't load properties file (cause: " + e + ")");
+            throw new RuntimeException("Can't load properties file (cause: " + e + ")");
         }
 
-        int httpPort;
-        int destPort;
-        InetAddress destAddr;
+        //Read properties
         try {
-            httpPort = Integer.parseInt(properties.getProperty("http.port"));
-            destPort = Integer.parseInt(properties.getProperty("tcp.dest.port"));
-            destAddr = InetAddress.getByName(properties.getProperty("tcp.dest.addr"));
+            LOGGER.info("Parsing properties");
+            int httpPort = Integer.parseInt(properties.getProperty("http.port"));
+            int destPort = Integer.parseInt(properties.getProperty("tcp.dest.port"));
+            InetAddress destAddr = InetAddress.getByName(properties.getProperty("tcp.dest.addr"));
+            LOGGER.info(String.format("SUCCESS: Parsing properties. [http.port = %d], [tcp.dest.port = %d], " +
+                    "[tcp.dest.addr = %s]", httpPort, destPort, destAddr.getHostAddress()));
+            LOGGER.info("Starting Jetty server");
+            Server server = new Server();
+            ServerConnector serverConnector = new ServerConnector(server);
+            serverConnector.setPort(httpPort);
+            server.setConnectors(new Connector[]{serverConnector});
+            server.start();
+            LOGGER.info("SUCCESS: Starting Jetty server");
+        } catch (NumberFormatException e) {
+            LOGGER.error("Incorrect port property format (cause: " + e + ")");
+            throw new RuntimeException("Incorrect port property format (cause: " + e + ")");
+        } catch (UnknownHostException e) {
+            LOGGER.error("Incorrect tcp.dest.addr property format (cause: " + e + ")");
+            throw new RuntimeException("Incorrect tcp.dest.addr property format (cause: " + e + ")");
         } catch (Exception e) {
-            //TODO: logging
-            throw new RuntimeException("Properties file does not contain all correct parameters needed." + System.lineSeparator() + e);
+            LOGGER.error("Jetty server caught an exception (cause: " + e + ")");
         }
-
-        Server server = new Server();
-        ServerConnector serverConnector = new ServerConnector(server);
-        serverConnector.setPort(httpPort);
-        server.setConnectors(new Connector[]{serverConnector});
-        server.start();
     }
 
     public static void main(String[] args) throws Exception {
