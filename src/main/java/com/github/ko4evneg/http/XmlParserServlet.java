@@ -1,8 +1,7 @@
 package com.github.ko4evneg.http;
 
-import com.github.ko4evneg.service.ParsingService;
+import com.github.ko4evneg.service.ProcessingService;
 import com.github.ko4evneg.util.ServletUtil;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import org.slf4j.Logger;
@@ -35,6 +34,6 @@ public class XmlParserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String requestURI = req.getRequestURI();
         LOGGER.info("POST request, uri = " + requestURI);
-        ParsingService.parseXml(req.getParameter("xml"), resp);
+        ProcessingService.parseXml(req.getParameter("xml"), resp);
     }
 }

@@ -1,5 +1,8 @@
 #  Release notes
 
+###  _0.4.0-SNAPSHOT_
+- Added ProcessinService responsible for parsing XML and converting it to JSON
+
 ###  _0.3.0-SNAPSHOT_
 - Added XmlParserServlet and get/post handling
 - Added HTML form for submitting XML

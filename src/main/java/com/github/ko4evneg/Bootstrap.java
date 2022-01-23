@@ -15,6 +15,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.util.Properties;
 
+//todo: run note
 public class Bootstrap {
     private static final Logger LOGGER = LoggerFactory.getLogger(Bootstrap.class);
 
