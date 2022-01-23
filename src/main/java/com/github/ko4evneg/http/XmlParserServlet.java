@@ -21,10 +21,10 @@ public class XmlParserServlet extends HttpServlet {
         try {
             if (req.getRequestURI().equals("/")) {
                 ServletUtil.replyWithSubmitForm(resp);
-                LOGGER.info("end submit-form: GET request, uri = " + requestURI);
+                LOGGER.info("SUCCESS: GET request, uri = " + requestURI);
             } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-                LOGGER.error("end 404-error: GET request, uri = " + requestURI);
+                LOGGER.error("FAIL(404): GET request, uri = " + requestURI);
             }
         } catch (IOException e) {
             LOGGER.error("IOException occurred: " + e);
@@ -32,9 +32,9 @@ public class XmlParserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String requestURI = req.getRequestURI();
-        LOGGER.info("start: POST request, uri = " + requestURI);
-        ParsingService.processXml(req.getParameter("xml"), resp);
+        LOGGER.info("POST request, uri = " + requestURI);
+        ParsingService.parseXml(req.getParameter("xml"), resp);
     }
 }

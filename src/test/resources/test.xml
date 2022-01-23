@@ -1,0 +1,17 @@
+<Envelope xmlns:urn="wsapi:Payment" xmlns:uts="wsapi:Utils">
+    <Body><rak>1</rak>
+        <urn:sendPayment>
+            <token>001234</token>
+            <cardNumber>811626834823422</cardNumber>
+            <requestId>2255086658</requestId>
+            <amount>100000.00</amount>
+            <currency>RUB</currency>
+    <uts:account type="source">009037269229</uts:account>
+    <uts:account type="destination">088127269229</uts:account>
+    <page>1</page>
+    <field id="0" value="0800" />
+    <field id="11" value="000001" />
+    <field id="70" value="301" />
+</urn:sendPayment>
+</Body>
+</Envelope>
