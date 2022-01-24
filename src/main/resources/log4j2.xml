@@ -4,14 +4,19 @@
         <Console name="stdout" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
         </Console>
+        <File name="fileout" fileName="log/converter.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+        </File>
     </Appenders>
 
     <Loggers>
         <Logger name="com.github.ko4evneg" level="info" additivity="false">
             <AppenderRef ref="stdout"/>
+            <AppenderRef ref="fileout"/>
         </Logger>
         <Root level="error">
             <AppenderRef ref="stdout"/>
+            <AppenderRef ref="fileout"/>
         </Root>
     </Loggers>
 </Configuration>

@@ -1,5 +1,8 @@
 #  Release notes
 
+###  _0.4.1-SNAPSHOT_
+- Added logging to file
+
 ###  _0.4.0-SNAPSHOT_
 - Added ProcessinService responsible for parsing XML and converting it to JSON
 

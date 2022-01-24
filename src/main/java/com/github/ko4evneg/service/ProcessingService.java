@@ -26,7 +26,7 @@ public class ProcessingService {
             LOGGER.info("SUCCESS: XML parsing. Starting conversion to JSON");
             String convertedJson = convertToJson(envelope, resp);
             if (convertedJson != null) {
-                LOGGER.info("SUCCESS: conversion to JSON");
+                LOGGER.info("SUCCESS: conversion to JSON. JSON result:" + System.lineSeparator() + convertedJson);
                 //send to socket code
             }
         } catch (JAXBException e) {
