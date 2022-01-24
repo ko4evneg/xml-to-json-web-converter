@@ -14,7 +14,6 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.Arrays;
 import java.util.Random;
 
 public class ProcessingService {
@@ -74,7 +73,6 @@ public class ProcessingService {
         } catch (IOException e) {
             LOGGER.error("ERROR: TCP sending of result data set: " + e);
         }
-
     }
 
     private static byte[] createResultOutPacket(String convertedJson) throws UnsupportedEncodingException {
@@ -93,28 +91,5 @@ public class ProcessingService {
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
         byteBuffer.putInt(num);
         return byteBuffer.array();
-    }
-
-    //todo:remove
-    public static void main(String[] args) throws IOException {
-        tcpSend("""
-                <Envelope xmlns:urn="wsapi:Payment" xmlns:uts="wsapi:Utils">
-                    <Body>
-                        <urn:sendPayment>
-                            <token>001234</token>
-                            <cardNumber>811626834823422</cardNumber>
-                            <requestId>2255086658</requestId>
-                            <amount>100000.00</amount>
-                            <currency>RUB</currency>
-                    <uts:account type="source">009037269229</uts:account>
-                    <uts:account type="destination">088127269229</uts:account>
-                    <page>1</page>
-                    <field id="0" value="0800" />
-                    <field id="11" value="000001" />
-                    <field id="70" value="301" />
-                </urn:sendPayment>
-                </Body>
-                </Envelope>
-                """, "127.0.0.1", "1234");
     }
 }

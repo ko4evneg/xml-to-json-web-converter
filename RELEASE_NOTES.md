@@ -1,5 +1,8 @@
 #  Release notes
 
+###  _0.5.0-SNAPSHOT_
+- Added feature of sending packet to tcp socket destination
+
 ###  _0.4.1-SNAPSHOT_
 - Added logging to file
 
