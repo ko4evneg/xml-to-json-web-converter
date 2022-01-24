@@ -1,10 +1,10 @@
-# CrestWave Technologies test project
+# XML to JSON conversion project (coding test for the job)
 
 ##  Run notes
 - import maven dependencies with pom.xml provided
 - run com.github.ko4evneg.Bootstrap class
 
-IMPORTANT: For correct test in IDEA, run configuration should have working directory set to $projectdir/target/classes directory.
+**IMPORTANT:** For correct test in IDEA, run configuration should have working directory set to $projectdir/target/classes directory.
 
 ## Description
 This program:
