@@ -7,8 +7,8 @@ import jakarta.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 
-//todo: run note
-public class XmlTest {
+//IMPORTANT: For correct test in IDEA, run configuration should have working directory set to $projectdir/target/classes directory.
+public class ManualXmlTest {
     public static void main(String[] args) throws JAXBException, IOException {
         JAXBContext context = JAXBContext.newInstance(Envelope.class);
 

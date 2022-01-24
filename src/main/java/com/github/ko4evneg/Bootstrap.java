@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.util.Properties;
 
-//IMPORTANT: For correct test in IDEA, run configuration should point to $projectdir/target/classes directory.
+//IMPORTANT: For correct test in IDEA, run configuration should have working directory set to $projectdir/target/classes directory.
 public class Bootstrap {
     private static final Logger LOGGER = LoggerFactory.getLogger(Bootstrap.class);
 
@@ -25,20 +25,20 @@ public class Bootstrap {
         try (FileInputStream inputStream = new FileInputStream(propertiesPath.toString())) {
             LOGGER.info("Loading properties file: " + propertiesPath);
             properties.load(inputStream);
-            LOGGER.info("SUCCESS: Loading properties file");
+            LOGGER.info("SUCCESS: Loading properties file.");
         } catch (IOException e) {
-            LOGGER.error("Can't load properties file (cause: " + e + ")");
-            throw new RuntimeException("Can't load properties file (cause: " + e + ")");
+            LOGGER.error("FAILURE: Loading properties file." + System.lineSeparator() + "Cause: " + e);
+            throw new RuntimeException("FAILURE: Loading properties file." + System.lineSeparator() + "Cause: " + e);
         }
 
         try {
-            LOGGER.info("Parsing properties");
+            LOGGER.info("Parsing properties...");
             int httpPort = Integer.parseInt(properties.getProperty("http.port"));
             int destPort = Integer.parseInt(properties.getProperty("tcp.dest.port"));
             InetAddress destAddr = InetAddress.getByName(properties.getProperty("tcp.dest.addr"));
-            LOGGER.info(String.format("SUCCESS: Parsing properties. [http.port = %d], [tcp.dest.port = %d], " +
-                    "[tcp.dest.addr = %s]", httpPort, destPort, destAddr.getHostAddress()));
-            LOGGER.info("Starting Jetty server on port " + httpPort);
+            LOGGER.info(String.format("SUCCESS: Parsing properties. {http.port = %d}, {tcp.dest.port = %d}, " +
+                    "{tcp.dest.addr = %s}", httpPort, destPort, destAddr.getHostAddress()));
+            LOGGER.info("Starting Jetty server on port: " + httpPort);
             Server server = new Server();
             ServerConnector serverConnector = new ServerConnector(server);
             serverConnector.setPort(httpPort);
@@ -49,15 +49,15 @@ public class Bootstrap {
             servletContextHandler.setAttribute("tcp.dest.addr", destAddr.getHostAddress());
             server.setHandler(servletContextHandler);
             server.start();
-            LOGGER.info("SUCCESS: Starting Jetty server on port " + httpPort);
+            LOGGER.info("SUCCESS: Starting Jetty server on port: " + httpPort);
         } catch (NumberFormatException e) {
-            LOGGER.error("Incorrect port property format (cause: " + e + ")");
-            throw new RuntimeException("Incorrect port property format (cause: " + e + ")");
+            LOGGER.error("FAILURE: Parsing properties. Incorrect port property format." + System.lineSeparator() + "Cause: " + e);
+            throw new RuntimeException("FAILURE: Parsing properties. Incorrect port property format." + System.lineSeparator() + "Cause: " + e);
         } catch (UnknownHostException e) {
-            LOGGER.error("Incorrect tcp.dest.addr property format (cause: " + e + ")");
-            throw new RuntimeException("Incorrect tcp.dest.addr property format (cause: " + e + ")");
+            LOGGER.error("FAILURE: Parsing properties. Incorrect tcp.dest.addr property format." + System.lineSeparator() + "Cause: " + e);
+            throw new RuntimeException("FAILURE: Parsing properties. Incorrect tcp.dest.addr property format." + System.lineSeparator() + "Cause: " + e);
         } catch (Exception e) {
-            LOGGER.error("Jetty server caught an exception (cause: " + e + ")");
+            LOGGER.error("FAILURE: Starting Jetty server on port." + System.lineSeparator() + "Cause: " + e);
         }
     }
 
