@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.util.Properties;
 
-//todo: run note
+//IMPORTANT: For correct test in IDEA, run configuration should point to $projectdir/target/classes directory.
 public class Bootstrap {
     private static final Logger LOGGER = LoggerFactory.getLogger(Bootstrap.class);
 
@@ -38,7 +38,6 @@ public class Bootstrap {
             InetAddress destAddr = InetAddress.getByName(properties.getProperty("tcp.dest.addr"));
             LOGGER.info(String.format("SUCCESS: Parsing properties. [http.port = %d], [tcp.dest.port = %d], " +
                     "[tcp.dest.addr = %s]", httpPort, destPort, destAddr.getHostAddress()));
-
             LOGGER.info("Starting Jetty server on port " + httpPort);
             Server server = new Server();
             ServerConnector serverConnector = new ServerConnector(server);
@@ -46,6 +45,8 @@ public class Bootstrap {
             server.setConnectors(new Connector[]{serverConnector});
             ServletContextHandler servletContextHandler = new ServletContextHandler();
             servletContextHandler.addServlet(XmlParserServlet.class, "/");
+            servletContextHandler.setAttribute("tcp.dest.port", destPort);
+            servletContextHandler.setAttribute("tcp.dest.addr", destAddr.getHostAddress());
             server.setHandler(servletContextHandler);
             server.start();
             LOGGER.info("SUCCESS: Starting Jetty server on port " + httpPort);

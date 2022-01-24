@@ -34,6 +34,9 @@ public class XmlParserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         String requestURI = req.getRequestURI();
         LOGGER.info("POST request, uri = " + requestURI);
-        ProcessingService.parseXml(req.getParameter("xml"), resp);
+        String convertedJson = ProcessingService.parseAndConvertXmlToJson(req.getParameter("xml"), resp);
+        ProcessingService.tcpSend(convertedJson,
+                this.getServletContext().getAttribute("tcp.dest.addr").toString(),
+                this.getServletContext().getAttribute("tcp.dest.port").toString());
     }
 }

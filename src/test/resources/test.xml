@@ -1,5 +1,5 @@
 <Envelope xmlns:urn="wsapi:Payment" xmlns:uts="wsapi:Utils">
-    <Body><rak>1</rak>
+    <Body>
         <urn:sendPayment>
             <token>001234</token>
             <cardNumber>811626834823422</cardNumber>
