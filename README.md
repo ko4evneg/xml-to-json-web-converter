@@ -1,10 +1,27 @@
 # CrestWave Technologies test project
 
 ##  Run notes
-IMPORTANT: For correct test in IDEA, run configuration should point to $projectdir/target/classes directory.
+- import maven dependencies with pom.xml provided
+- run com.github.ko4evneg.Bootstrap class
+
+IMPORTANT: For correct test in IDEA, run configuration should have working directory set to $projectdir/target/classes directory.
 
 ## Description
-The program intended to provide HTML UI form for submitting XML, validate and parse this XML on backend and return JSON packet back to the form.
+This program:
+- provides HTML UI form for submitting XML at "/"
+- validate XML is well-formed
+- parse this XML to Java object 
+- convert XML to JSON
+- transform JSON into tcp packet's payload according requirements
+- send tcp packet with binary representation of payload
+- logs all events along the run into the file and console
+
+###  TCP packet payload requirements
+| Item | Description | Format and Value |
+| --- | --- | --- |
+|Header|fixed magic|FFBBCCDD|
+|Length|variable json length|4 bytes little endian integer|
+|Json|byte[] of json stringv|utf16-le charset|
 
 ##  Technologies used
 
@@ -16,5 +33,3 @@ The program intended to provide HTML UI form for submitting XML, validate and pa
 - Jetty Servlet Container
 - Log4J
 - Jackson lib
-
-##  L

@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-public class SocketTest {
+public class ManualSocketTest {
     private final static int SERVER_PORT = 1234;
     private ServerSocket serverSocket;
 
@@ -23,9 +23,7 @@ public class SocketTest {
                 in = clientSocket.getInputStream();
                 int i;
                 byte[] buf = new byte[2000];
-                while (in.read(buf) > 0) {
-                }
-
+                while (in.read(buf) > 0) {}
                 ByteBuffer byteBuffer = ByteBuffer.allocate(4);
                 byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
                 byteBuffer.put(Arrays.copyOfRange(buf, 4, 8));
@@ -52,7 +50,7 @@ public class SocketTest {
     }
 
     public static void main(String[] args) throws IOException {
-        SocketTest server = new SocketTest();
+        ManualSocketTest server = new ManualSocketTest();
         server.start();
     }
 }

@@ -1,5 +1,9 @@
 #  Release notes
 
+###  _1.0.0-SNAPSHOT_
+- Made refactoring for production use
+- Aligned log messages to the same format
+
 ###  _0.5.0-SNAPSHOT_
 - Added feature of sending packet to tcp socket destination
 
